@@ -2,12 +2,17 @@ package com.learning.seccion12webapirestful.controllers;
 
 import com.learning.seccion12webapirestful.entities.Product;
 import com.learning.seccion12webapirestful.services.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.Binding;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -34,12 +39,18 @@ public class ProductController {
 
 
     @PostMapping
-    public ResponseEntity<Product> create(@RequestBody Product product){
+    public ResponseEntity<?> create(@Valid @RequestBody Product product, BindingResult result){
+        if (result.hasFieldErrors()){
+            return validation(result);
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(product));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> update(@PathVariable Long id, @RequestBody Product product){
+    public ResponseEntity<?> update(@Valid @RequestBody Product product, BindingResult result,@PathVariable Long id ){
+        if (result.hasFieldErrors()){
+            return validation(result);
+        }
         Optional<Product> productOptional = service.update(id,product);
         if(productOptional.isPresent()){
             return ResponseEntity.status(HttpStatus.CREATED).body(productOptional.orElseThrow());
@@ -56,4 +67,13 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    private ResponseEntity<?> validation(BindingResult result) {
+        Map<String,String> errors = new HashMap<>();
+        result.getFieldErrors().forEach(fieldError -> {
+            errors.put(fieldError.getField(),"El campo " + fieldError.getField() + " " + fieldError.getDefaultMessage());
+        });
+        return ResponseEntity.badRequest().body(errors);
+    }
+
 }

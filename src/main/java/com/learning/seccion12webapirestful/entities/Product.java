@@ -1,6 +1,7 @@
 package com.learning.seccion12webapirestful.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name="products")
@@ -8,8 +9,17 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
+    @Size(min = 3, max = 25)
     private String name;
+
+    @Min(200)
+    @NotNull
     private Integer price;
+
+    @NotEmpty
+    @NotBlank
     private String description;
 
 
