@@ -1,5 +1,6 @@
 package com.learning.seccion12webapirestful.entities;
 
+import com.learning.seccion12webapirestful.validation.IsExistsDb;
 import com.learning.seccion12webapirestful.validation.IsRequiered;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -22,7 +23,9 @@ public class Product {
     @IsRequiered()
     private String description;
 
-
+    @IsRequiered
+    @IsExistsDb
+    private String sku;
 
 
     public Long getId() {
@@ -55,5 +58,13 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 }
