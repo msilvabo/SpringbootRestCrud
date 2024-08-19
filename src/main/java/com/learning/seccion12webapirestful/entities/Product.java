@@ -10,16 +10,16 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "{NotEmpty.product.name}")
     @Size(min = 3, max = 25)
     private String name;
 
-    @Min(200)
-    @NotNull
+    @Min(value= 200, message = "{Min.product.price}")
+    @NotNull(message = "{NotNull.product.price}")
     private Integer price;
 
-    @NotEmpty
-    @NotBlank
+    @NotEmpty(message = "{NotEmpty.product.name}")
+    @NotBlank(message = "{NotBlank.product.description}")
     private String description;
 
 
