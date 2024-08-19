@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.Binding;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +43,7 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody Product product, BindingResult result){
-        validation.validate(product, result);
+//        validation.validate(product, result);
         if (result.hasFieldErrors()){
             return validation(result);
         }
@@ -53,7 +52,7 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@Valid @RequestBody Product product, BindingResult result,@PathVariable Long id ){
-        validation.validate(product, result);
+//        validation.validate(product, result);
         if (result.hasFieldErrors()){
             return validation(result);
         }

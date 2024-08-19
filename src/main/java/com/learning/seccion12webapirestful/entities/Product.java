@@ -1,5 +1,6 @@
 package com.learning.seccion12webapirestful.entities;
 
+import com.learning.seccion12webapirestful.validation.IsRequiered;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -10,7 +11,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "{NotEmpty.product.name}")
+    @IsRequiered(message = "{IsRequiered.product.name}")
     @Size(min = 3, max = 25)
     private String name;
 
@@ -18,8 +19,7 @@ public class Product {
     @NotNull(message = "{NotNull.product.price}")
     private Integer price;
 
-    @NotEmpty(message = "{NotEmpty.product.name}")
-    @NotBlank(message = "{NotBlank.product.description}")
+    @IsRequiered()
     private String description;
 
 
